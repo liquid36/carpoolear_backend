@@ -2,8 +2,6 @@
 
 namespace STS\Http\Controllers;
 
-
-
 class HomeController extends Controller
 {
     public function home()
