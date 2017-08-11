@@ -39,14 +39,15 @@ class SocialRepository implements SocialRepo
         return $account;
     }
 
-    public function create(User $user, $provider_user_id, $provider = null)
+    public function create(User $user, $data, $provider = null)
     {
         if (is_null($provider)) {
             $provider = $this->provider;
         }
         $account = new SocialAccount([
-            'provider_user_id' => $provider_user_id,
+            'provider_user_id' => $data['provider_user_id'],
             'provider'         => $provider,
+            'user_link'        => $data['user_link'] 
         ]);
         $account->user()->associate($user);
         $account->save();

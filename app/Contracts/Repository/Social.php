@@ -11,7 +11,7 @@ interface Social
 
     public function find($provider_user_id, $provider = null);
 
-    public function create(UserModel $user, $provider_user_id, $provider = null);
+    public function create(UserModel $user, $data, $provider = null);
 
     public function delete(SocialAccount $account);
 

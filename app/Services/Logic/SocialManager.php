@@ -129,6 +129,8 @@ class SocialManager extends BaseManager implements SocialLogic
 
     private function create($provider_user_id, $data)
     {
+        $user_link  = $data['user_link'];
+        unset($data['user_link']);
         unset($data['provider_user_id']);
         $data['password'] = null;
         $data['active'] = true;
@@ -142,7 +144,12 @@ class SocialManager extends BaseManager implements SocialLogic
 
             return;
         }
-        $this->socialRepo->create($user, $provider_user_id);
+        $acc = [
+            'provider_user_id' => $provider_user_id,
+            'user_link' => $user_link
+        ];
+        console_log($acc);
+        $this->socialRepo->create($user, $acc);
         $this->syncFriends($user);
 
         return $user;

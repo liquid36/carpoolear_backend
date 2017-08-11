@@ -24,7 +24,7 @@ class FacebookSocialProvider implements SocialProvider
 
     public function getUserData()
     {
-        $response = $this->request('/me?fields=email,name,gender,picture.width(300),birthday');
+        $response = $this->request('/me?fields=email,name,gender,picture.width(300),birthday,link');
         if ($response->getStatusCode() == 200) {
             $body = json_decode($response->getBody());
 
@@ -44,11 +44,12 @@ class FacebookSocialProvider implements SocialProvider
                     $body->birthday = $auxBirth[2].'-'.$auxBirth[0].'-'.$auxBirth[1];
                 }
             }
-
+            
             return [
                 'provider_user_id'      => $body->id,
                 'email'                 => isset($body->email) ? $body->email : null,
                 'name'                  => $body->name,
+                'user_link'             => $body->link,
                 'gender'                => isset($body->gender) ? $body->gender : null,
                 'birthday'              => isset($body->birthday) ? $body->birthday : null,
                 'banned'                => false,
