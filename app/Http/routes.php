@@ -15,6 +15,10 @@
 //     return File::get(public_path().'/app/index.html');
 // })->where('name', '[\/\w\.-]*');
 
+Route::get('/testing', function () {
+    event(new STS\Events\TestingRedis(\STS\User::find(1)));
+});
+
 Route::get('/', 'HomeController@home');
 Route::get('/home', 'HomeController@home');
 Route::get('/generateHash', 'HomeController@hashPassword');
