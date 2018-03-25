@@ -3,8 +3,10 @@
 namespace STS\Events;
 
 use Illuminate\Queue\SerializesModels;
+use STS\Transformers\MessageTransformer;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MessageSend extends Event
+class MessageSend extends Event implements ShouldBroadcast
 {
     use SerializesModels;
 
@@ -33,6 +35,19 @@ class MessageSend extends Event
      */
     public function broadcastOn()
     {
-        return [];
+        return ['user-' . $this->to->id];
     }
+
+    public function broadcastWith()
+    {
+        $tr = new MessageTransformer($this->to);
+        $payload = $tr->transform($this->message);
+        return $payload;
+    }
+
+    public function broadcastAs()
+    {
+        return 'new-message';
+    }
+
 }
