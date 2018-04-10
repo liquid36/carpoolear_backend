@@ -6,7 +6,7 @@ use Illuminate\Queue\SerializesModels;
 use STS\Transformers\MessageTransformer;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MessageSend extends Event implements ShouldBroadcast
+class MessageSend extends Event
 {
     use SerializesModels;
 
@@ -28,26 +28,5 @@ class MessageSend extends Event implements ShouldBroadcast
         $this->message = $message;
     }
 
-    /**
-     * Get the channels the event should be broadcast on.
-     *
-     * @return array
-     */
-    public function broadcastOn()
-    {
-        return ['user-' . $this->to->id];
-    }
-
-    public function broadcastWith()
-    {
-        $tr = new MessageTransformer($this->to);
-        $payload = $tr->transform($this->message);
-        return $payload;
-    }
-
-    public function broadcastAs()
-    {
-        return 'new-message';
-    }
 
 }

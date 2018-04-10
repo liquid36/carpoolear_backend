@@ -29,7 +29,7 @@ class MessageTransformer extends TransformerAbstract
             'conversation_id' => $message->conversation_id,
         ];
         if ($this->user->id == $message->user_id) {
-            $data['no_of_read'] = $message->numberOfRead();
+            // $data['no_of_read'] = $message->numberOfRead();
         }
 
         return $data;
